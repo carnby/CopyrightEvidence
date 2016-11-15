@@ -1,0 +1,150 @@
+<html>
+  <head>
+    <title>Copyright Evidence Aggregator - EU Hackathon 2016</title>
+    <link rel="stylesheet" href="css/common.css" type="text/css" />
+    <link rel="stylesheet" href="styles.css" type="text/css" />
+    
+    <link href="datasets/copyright-evidence.json" type="application/json" rel="exhibit-data" />
+    <script src="js/exhibit-api.js"></script>
+    <script src="exhibit-vis-extension.js"></script>
+    <script src="js/require.js"></script>
+
+    <link rel="stylesheet" href="bootstrap-3.3.2-dist/css/bootstrap-sandstone.min.css">
+
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body>
+
+  <nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Copyright Evidence Aggregator</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li><a href="#" data-toggle="modal" data-target="#about-modal">About Us</a></li>
+        <li><a href="#">EU Hackathon 2016</a></li>
+      <li><a href="http://2016.euhackathon.eu/6thedition/">Copyright Evidence Wiki</a></li>
+          <li><a href="datasets/copyright-evidence.json" target="_blank">Get Full
+            Dataset</a></li>
+      </ul>
+
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+  <div class="container-fluid">
+  <div class="row">
+    <div class="sidebar col-md-4">
+            <div id="sidebar">
+                <div ex:role="facet" ex:facetClass="TextSearch" facetLabel="Search" ex:expressions=".abstract"></div>
+
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                    <h3 class="panel-title">Country</h3>
+                  </div>
+                  <div class="panel-body">
+                    <div ex:role="facet" ex:expression=".country" ex:facetLabel="" ex:height="7em"
+                     ex:sortMode="count" ex:showMissing="false"></div>
+                  </div>
+                </div>
+
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                    <h3 class="panel-title">Industry</h3>
+                  </div>
+                  <div class="panel-body">
+                    <div ex:role="facet" ex:expression=".industries" ex:facetLabel="" ex:height="7em"
+                     ex:sortMode="count" ex:showMissing="false"></div>
+                  </div>
+                </div>
+
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                    <h3 class="panel-title">Years</h3>
+                  </div>
+                  <div class="panel-body">
+                    <div ex:role="facet" ex:expression=".year" ex:facetLabel="Years" ex:height="7em"
+                         ex:sortDirection="reverse"></div>
+                  </div>
+                </div>
+
+            </div>
+
+    </div>
+
+      <div class="content col-md-8">
+          <div id="main-content">
+                <div ex:role="exhibit-controlPanel" ex:developerMode="true" ex:hoverReveal="true"></div>
+                <div class="item" ex:role="exhibit-lens" ex:itemTypes="Study" style="display: none">
+                    <h2><a ex:href-content=".url"><span ex:content=".label"></span></a></h2>
+                    <div><strong>Authors:</strong> <span ex:content=".authors"></span></div>
+                    <div><strong>Industries:</strong> <span ex:content=".industries"></span></div>
+                    <div ex:if-exists=".abstract" ex:content=".abstract"></div>
+                    <div ex:if-exists=".plain_text_proposition"><strong>Results:</strong><span
+                            ex:content=".plain_text_proposition"
+                    ></span></div>
+                </div>
+
+                <div ex:role="viewPanel">
+
+                    <div ex:role="view"
+                        ex:viewClass="Tile"
+                        ex:orders=".citation_count, .label, .year"
+                        ex:possibleOrders=".citation_count, .year, .label"
+                        ex:label="Articles"
+                        ex:paginate="true"
+                        ex:directions="descending, ascending"
+                        ex:grouped="false"
+                        ></div>
+
+                    <div ex:role="view"
+                        ex:viewClass="Wordcloud"
+                        ex:label="Wordcloud"
+                        ></div>
+
+                    <div ex:role="view"
+                        ex:viewClass="Streamgraph"
+                        ex:label="Trending Entities"
+                        ></div>
+
+                    <div ex:role="view"
+                        ex:viewClass="WorldMap"
+                        ex:label="Geographical Coverage"
+                        ></div>
+
+                </div>
+          </div>
+        </div>
+      </div>
+  </div>
+
+  <!-- Modal -->
+<div class="modal fade" id="about-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">About Us</h4>
+      </div>
+      <div class="modal-body">
+        Kamonohashi no Ico-chan!
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+  </body>
+</html>

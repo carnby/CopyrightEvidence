@@ -1,2 +1,1 @@
-# CopyrightEvidence
-Team Bodoques for Euhackthon 2016 
+# copyright_evidence_report

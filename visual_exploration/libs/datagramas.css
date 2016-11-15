@@ -1,0 +1,77 @@
+@import url(./leaflet/leaflet.css);
+
+/*
+ * Legend styling
+ * From http://bl.ocks.org/mbostock/1166403
+ */
+
+.axis path {
+  fill: none;
+  stroke: none;
+}
+
+.axis .minor {
+  stroke-opacity: .5;
+  stroke: black;
+}
+
+.axis text {
+    font-size: 10px;
+}
+
+.axis path.domain {
+  display: none;
+}
+
+.axis line {
+  stroke: #efefef;
+  shape-rendering: crispEdges;
+}
+
+g.legendCells circle.swatch {
+    fill: '#efefef';
+}
+
+/*
+ * We need the following because the IPython/Jupyter notebook makes SVGs invisible in our case.
+ */
+
+.rendered_html svg,
+div.output_area div.datagram-figure div.leaflet_container svg {
+  max-width: unset !important;
+}
+
+
+/**
+ * This is from d3-tip.
+ * Source: http://bl.ocks.org/Caged/6476579
+ */
+
+.d3-tip {
+  line-height: 1;
+  font-weight: bold;
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  border-radius: 2px;
+}
+
+/* Creates a small triangle extender for the tooltip */
+.d3-tip:after {
+  box-sizing: border-box;
+  display: inline;
+  font-size: 10px;
+  width: 100%;
+  line-height: 1;
+  color: rgba(0, 0, 0, 0.8);
+  content: "\25BC";
+  position: absolute;
+  text-align: center;
+}
+
+/* Style northward tooltips differently */
+.d3-tip.n:after {
+  margin: -1px 0 0 0;
+  top: 100%;
+  left: 0;
+}
