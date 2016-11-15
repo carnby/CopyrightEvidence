@@ -129,3 +129,7 @@ table.spaced-table tr td {
 table.spaced-table tr:first-child td {
     padding-top: 0;
 }
+
+ol.exhibit-tileView-body {
+    list-style: none;
+}
