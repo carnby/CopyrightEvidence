@@ -2,14 +2,14 @@
     var svg_width = 1024;
     var width = svg_width - 50;
     var svg_height = 500;
-    var height = svg_height - 60;
-    var n_layers = 5;
+    var height = svg_height - 70;
     var interpolation = 'cardinal';
-    var offset = 'base';
+    var offset = 'wiggle';
     var variable = 'entity_count';
 
-    // husl
-    var palette= ['#320a5e', '#781c6d', '#bc3754', '#ed6925', '#fbb61a']
+    // plasma
+    var palette= ['#4c02a1', '#7e03a8', '#aa2395', '#cc4778', '#e66c5c', '#f89540', '#fdc527']
+    var n_layers = palette.length;
 
     var stream = {};
 
@@ -48,6 +48,10 @@
                         all_words.hasOwnProperty(d.key) ?
                             all_words[d.key] += d.value :
                             all_words[d.key] = d.value;
+
+                        yearly_count.hasOwnProperty(d.key) ?
+                            yearly_count[d.key] += d.value :
+                            yearly_count[d.key] = d.value;
                     });
                 });
             });
@@ -152,7 +156,7 @@
                 .attr({'width': svg_width, 'height': svg_height})
                 .append("g")
                 .classed('main_canvas', true)
-                .attr('transform', 'translate(' + [(svg_width - width) * 0.5, (svg_height - height) * 0.5] + ')');
+                .attr('transform', 'translate(' + [(svg_width - width) * 0.5, (svg_height - height) - 20] + ')');
 
             var svg = container.select('g.main_canvas');
 
@@ -188,7 +192,7 @@
                 .attr("transform", function() {
                     var bbox = this.getBBox();
                     var w = (width - bbox.width) * 0.5;
-                    return "translate(" + [w,20] + ")";
+                    return "translate(" + [w,5] + ")";
                 });
 
             var axis_x = svg.selectAll("g.x_axis")
