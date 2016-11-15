@@ -1,7 +1,11 @@
 # Copyright Evidence Aggregator
 
+![screenshot](screenshot.png?raw=true "A Screenshot of our project action")
+
 Hi! This is an EU Hackathon 2016 project by [Luca Chiarandini](http://grupoweb.upf.edu/~luca.chiarandini/), [Eduardo Graells-Garrido](http://datagramas.cl),
 and [Diego Sáez-Trumper](https://scholar.google.es/citations?user=WtSYxGQAAAAJ&hl=es) (Team Bodoques).
+
+[See it live!](http://datagramas.cl/euhackathon)
 
 ### Resources
 
