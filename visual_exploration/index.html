@@ -31,11 +31,12 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li><a href="#" data-toggle="modal" data-target="#about-modal">About Us</a></li>
-        <li><a href="#">EU Hackathon 2016</a></li>
-      <li><a href="http://2016.euhackathon.eu/6thedition/">Copyright Evidence Wiki</a></li>
-          <li><a href="datasets/copyright-evidence.json" target="_blank">Get Full
+        <li><a href="#" data-toggle="modal" data-target="#about-modal">About This Site</a></li>
+        <li><a href="http://2016.euhackathon.eu/">EU Hackathon 2016</a></li>
+      <li><a href="http://www.copyrightevidence.org/">Copyright Evidence Wiki</a></li>
+          <li><a href="datasets/copyright-evidence.json" target="_blank">Download Full
             Dataset</a></li>
+          <li><a href="https://github.com/digitalTranshumant/CopyrightEvidence" target="_blank">Github Repository</a></li>
       </ul>
 
     </div><!-- /.navbar-collapse -->
@@ -88,10 +89,11 @@
                 <div ex:role="exhibit-controlPanel" ex:developerMode="true" ex:hoverReveal="true"></div>
                 <div class="item" ex:role="exhibit-lens" ex:itemTypes="Study" style="display: none">
                     <h2><a ex:href-content=".url"><span ex:content=".label"></span></a></h2>
-                    <div><strong>Authors:</strong> <span ex:content=".authors"></span></div>
-                    <div><strong>Industries:</strong> <span ex:content=".industries"></span></div>
+                    <div ex:if-exists=".authors"><strong>Authors:</strong> <span ex:content=".authors"></span></div>
+                    <div ex:if-exists=".industries"><strong>Industries:</strong>
+                        <span ex:content=".industries"></span></div>
                     <div ex:if-exists=".abstract" ex:content=".abstract"></div>
-                    <div ex:if-exists=".plain_text_proposition"><strong>Results:</strong><span
+                    <div ex:if-exists=".plain_text_proposition"><strong>Results:</strong> <span
                             ex:content=".plain_text_proposition"
                     ></span></div>
                 </div>
