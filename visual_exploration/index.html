@@ -104,7 +104,7 @@
                         ex:viewClass="Tile"
                         ex:orders=".citation_count, .label, .year"
                         ex:possibleOrders=".citation_count, .year, .label"
-                        ex:label="Articles"
+                        ex:label="Selected Articles"
                         ex:paginate="true"
                         ex:directions="descending, ascending"
                         ex:grouped="false"
@@ -112,17 +112,17 @@
 
                     <div ex:role="view"
                         ex:viewClass="Wordcloud"
-                        ex:label="Wordcloud"
+                        ex:label="Frequent Terms"
                         ></div>
 
                     <div ex:role="view"
                         ex:viewClass="Streamgraph"
-                        ex:label="Trending Entities"
+                        ex:label="Topical Evolution"
                         ></div>
 
                     <div ex:role="view"
                         ex:viewClass="WorldMap"
-                        ex:label="Geographical Coverage"
+                        ex:label="Map of Research Evidence versus Public Opinion"
                         ></div>
 
                 </div>
@@ -137,10 +137,13 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">About Us</h4>
+        <h4 class="modal-title" id="myModalLabel">About This Site</h4>
       </div>
       <div class="modal-body">
-        Kamonohashi no Ico-chan!
+        <p>This is a project by Luca Chiarandini, Eduardo Graells-Garrido, and Diego Sáez-Trumper. We are a group
+        of friends who participated in the EU Hackathon 2016 to contribute to the copyright discussion and
+        understanding by using visualization and text analysis techniques. Check our Github repository to see
+        all the code that made this site possible!</p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
