@@ -89,3 +89,7 @@ div.exhibit-text-facet {
 div.exhibit-viewPanel.exhibit-ui-protection {
     margin-bottom: 1em;
 }
+
+div.popover {
+    max-width: 500px;
+}
