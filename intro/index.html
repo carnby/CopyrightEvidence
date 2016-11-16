@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>EUHackathon 2016</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<!-- CSS stylesheets. -->
+		
+		<!-- Javascript libraries. -->
+		<script src="js/lib/jquery.min.js"></script>
+		<script src="js/lib/d3.min.js"></script>
+		<script src="js/lib/topojson.min.js"></script>
+		<script src="js/lib/datamaps.world.min.js"></script>
+		<script src="js/lib/aframe.min.js"></script>
+		<script src="js/lib/aframe-draw-component.min.js"></script>
+		<script src="js/lib/aframe-text-component.min.js"></script>
+	</head>
+	<body>
+		<style>
+      body{
+        font-family: 'roboto', 'open sans', sans-serif;
+      }
+    </style>
+		<a-scene id="scene">
+	      <a-assets>
+	        <img id="sky-texture" src="stars.png"></div>
+	      </a-assets>
+	      <a-entity id="camera" rotation="0 0 0" camera wasd-controls look-controls>
+	      	<a-light type="point" distance="40" position="0 0 1" rotation="0 0 0"></a-light>
+	  	  </a-entity>
+	      <a-sky id="sky" src="#sky-texture"></a-sky>
+	    </a-scene>
+	    <script>
+	    d3.json('starwars.json', function(error, wordcloud) {
+	    	if (!wordcloud) { 
+	    		console.error('Error loading data.');
+	    		return; 
+	    	}
+	    	// Maximum number of words per year.
+	    	var kMaximumYearWords = 4;
+			// XY radius where the text is spawned.
+			var kTextXOffset = 2;
+			var kTextXRadius = 5;
+			var kTextYOffset = 2;
+			var kTextYRadius = 4;
+			// Length of a year in meters.
+			var kYearLength = 3;
+
+		    // Scene of Aframe.
+			var scene = document.querySelector('#scene');
+			for (var currentIndex in wordcloud) {
+				var year = wordcloud[currentIndex].year;
+				// Write the current year.
+				var yearEl = document.createElement('a-entity');
+				yearEl.setAttributeNS(null, 'material', 'color: white; opacity: 0.8;');
+				yearEl.setAttributeNS(null, 'position', [-1, -0.25, -kYearLength * currentIndex].join(' '));
+				yearEl.setAttributeNS(null, 'text', 'text: ' + year + ';');
+				scene.appendChild(yearEl);
+
+				var words = wordcloud[currentIndex].words.slice(0, kMaximumYearWords);
+				var wordDistance = kYearLength / words.length;
+				for (var i in words) {
+					var word = words[i].word;
+					var weight = words[i].weight;
+					var x = Math.random() * kTextXRadius * 2 - kTextXRadius - kTextXOffset;
+					var y = Math.sign(Math.random() - 0.5) * (Math.random() * kTextYRadius + kTextYOffset);
+					var z = -(kYearLength * currentIndex + wordDistance * i);
+
+					var el = document.createElement('a-entity');
+					var wordEl = document.createElement('a-entity');
+					wordEl.setAttributeNS(null, 'material', 'color: yellow');
+					wordEl.setAttributeNS(null, 'rotation', [Math.sign(y) * 90, 0, 0].join(' '));
+					wordEl.setAttributeNS(null, 'position', [x, y, z].join(' '));
+					wordEl.setAttributeNS(null, 'text', 'text: ' + word + ';');
+					el.appendChild(wordEl);
+					scene.appendChild(el);
+				}
+			}
+			// Add the final text.
+			var finalEl = document.createElement('a-entity');
+			finalEl.setAttributeNS(null, 'material', 'color: white');
+			finalEl.setAttributeNS(null, 'position', [-4, -0.25, - kYearLength * wordcloud.length - kYearLength].join(' '));
+			finalEl.setAttributeNS(null, 'text', 'text: Copyright Evidence Wiki;');
+			scene.appendChild(finalEl);
+
+			// Make the camera animation.
+			//
+			// Time spent in each year.
+			var kYearDurationSeconds = 4;
+			// The camera starts with an offset from the first year.
+			var kCameraOffset = kYearLength;
+
+			var camera = document.querySelector('#camera');
+			var totalYearLength = kYearLength * wordcloud.length;
+			var totalDuration = (totalYearLength + kCameraOffset) / (kYearLength / kYearDurationSeconds) * 1000;
+			var positionAnimationEl = document.createElement('a-animation');
+			positionAnimationEl.setAttributeNS(null, 'attribute', 'position');
+			positionAnimationEl.setAttributeNS(null, 'from', [0, 0, kCameraOffset].join(' '));
+			positionAnimationEl.setAttributeNS(null, 'to', [0, 0, -totalYearLength].join(' '));
+			positionAnimationEl.setAttributeNS(null, 'dur', totalDuration);
+			positionAnimationEl.setAttributeNS(null, 'easing', 'linear');
+			camera.appendChild(positionAnimationEl);
+		});
+	    </script>
+	</body>
+</html>

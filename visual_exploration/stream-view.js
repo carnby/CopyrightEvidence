@@ -183,7 +183,7 @@
             console.log('legend', legend_g.node().getBBox());
 
             var legendOrdinal = d3legend.color()
-                .shapePadding(100)
+                .shapePadding(125)
                 .scale(color)
                 .orient('horizontal');
 
