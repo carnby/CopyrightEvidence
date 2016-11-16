@@ -220,8 +220,6 @@ Exhibit.onjQueryLoaded(function() {
         Exhibit.jQuery('input').addClass('form-control').attr('placeholder', 'Search...');
 
         require(['d3'], function(d3) {
-            var current_popover = null;
-
             d3.json('./datasets/entities_description.json', function(error, json) {
                 console.log('entities_description download', error, json);
                 Exhibit.VisExtension.datasets['entity_descriptions'] = json;
@@ -237,8 +235,6 @@ Exhibit.onjQueryLoaded(function() {
                             'placement': 'top',
                             'content': json[title]
                         });
-                        
-                        console.log(node, title);
                     });
             });
         });
