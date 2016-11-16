@@ -11,31 +11,55 @@
     var countryFeatures;
 
     // Question text.
-    var featureNames = [
+    var kFeatures = [
         { 
             id: 'articles', 
             label: 'Number of articles',
+            min_color: '#deebf7',
+            max_color: '#3182bd',
+            min_label: 'No articles',
+            max_label: 'Many articles',
         },
         { 
             id: 'problems_uploading_images',
             label: 'When uploading your images of works, such as works of architecture or sculpture, made to be located permanently in public places on the internet, have you faced problems related to the fact that such works were protected by copyright?',
+            min_color: '#fc8d59',
+            max_color: '#91cf60',
+            min_label: 'Never',
+            max_label: 'Always',
         },
         { 
             id: 'impact_neighbouring_right', 
             label: 'What would be the impact on publishers of the creation of a new neighbouring right in EU law (in particular on their ability to license and protect their content from infringements and to receive compensation for uses made under an exception)?',
+            min_color: '#fc8d59',
+            max_color: '#91cf60',
+            min_label: 'No impact',
+            max_label: 'Large impact',
         },
         { 
             id: 'impact_exception', 
             label: 'What would be the impact on you/your activity of introducing an exception at the EU level covering non-commercial uses of works, such as works of architecture or sculpture, made to be located permanently in public places?',
+            min_color: '#fc8d59',
+            max_color: '#91cf60',
+            min_label: 'No impact',
+            max_label: 'Large impact',
         },
     ];
 
     // Feature used in the visualization.
-    var currentFeature = featureNames[0]['id'];
+    var currentFeature = kFeatures[0]['id'];
 
     // Updates the countries with the map. Call this method whenever you want to update the map.
-    var update_countries = function (g) {
-        var countries = g.selectAll('.country');
+    var update_countries = function (countryGroup, legendGroup) {
+        var countries = countryGroup.selectAll('.country');
+
+        var legend = d3.legendColor()
+          .shapeWidth(30)
+          .cells([kFeatures[currentFeature].min_label, kFeatures[currentFeature].max_label])
+          .orient('horizontal')
+          .scale(color[currentFeature]);
+
+        legendGroup.call(legend);
 
         // Check if we need to load the countries.
         if (countries[0].length == 0) {
@@ -144,19 +168,23 @@
                 };
 
                 // Populate the buttons at the top of the page.
-                var dropdownDiv = d3.select(self._dom.plotContainer)
-                    .selectAll('div.questionDiv')
+                var headerDiv = d3.select(self._dom.plotContainer)
+                    .selectAll('div.map-header')
                     .data([1]).enter().append('div')
+                    .classed('map-header', 1);
+
+                var dropdownDiv = headerDiv.append('div')
                     .classed('dropdown questionDiv', 1);
 
                 dropdownDiv.append('button')
                     .classed('btn btn-default dropdown-toggle', 1)
                     .attr('type', 'button')
                     .attr('data-toggle', 'dropdown')
-                    .html('Select a question <span class="caret"></span>');
+                    .html('Select a dimension <span class="caret"></span>');
+
                 dropdownDiv.append('ul')
                     .classed('dropdown-menu', 1)
-                    .selectAll('li.button').data(featureNames).enter()
+                    .selectAll('li.button').data(kFeatures).enter()
                     .append('li').append('a')
                         .attr('href', '#')
                         .text(function(d,i) { return d['label']; })
@@ -169,15 +197,23 @@
                     .selectAll('svg.worldmap')
                     .data([1]);
 
-                svg.enter().append('svg')
+                var svgEnter = svg.enter().append('svg')
                     .classed('worldmap', 1)
                     .attr('width', width)
-                    .attr('height', height)
-                    .append('g');
+                    .attr('height', height);
 
-                var g = svg.select('g');
+                svgEnter
+                    .append('g')
+                    .classed('countries', 1);
+                
+                svgEnter
+                    .append('g')
+                    .classed('legend', 1);
 
-                update_countries(g);
+                var countryGroup = svg.select('g.countries');
+                var legendGroup = svg.select('g.legend');
+
+                update_countries(g, legendDiv);
             });  // d3.json
         });
     };
