@@ -6,6 +6,7 @@ Exhibit.onjQueryLoaded(function() {
         Exhibit.VisExtension = {
             "initialized": false, // used in the view
             "_CORSWarned": false, // used in the view
+            'datasets': {},
             'views': {}
         };
 
@@ -152,6 +153,18 @@ Exhibit.onjQueryLoaded(function() {
 
         Exhibit.includeJavascriptFiles(null, javascriptFiles);
 
+        Exhibit.VisExtension['highlight_entities'] = function(element) {
+            require(['d3'], function(d3) {
+                var spans = d3.select(element).select('span.entity-list')
+                    .selectAll('span')
+                    .classed('label label-info', true);
+
+                var industry_spans = d3.select(element).select('span.industry-list')
+                    .selectAll('span')
+                    .classed('label label-success', true);
+            });
+        };
+
         require.config({
             paths: {
                   "sankey": "libs/d3-sankey/sankey",
@@ -204,7 +217,26 @@ Exhibit.onjQueryLoaded(function() {
 
     Exhibit.jQuery(document).one("loadExtensions.exhibit", loader);
     Exhibit.jQuery(document).on('exhibitConfigured.exhibit', function() {
-        console.log('input', Exhibit.jQuery('input').addClass('form-control').attr('placeholder', 'Search...'));
-    })
-    console.log('binded')
+        Exhibit.jQuery('input').addClass('form-control').attr('placeholder', 'Search...');
+
+        require(['d3'], function(d3) {
+            d3.json('./datasets/entities_description.json', function(error, json) {
+                console.log('entities_description download', error, json);
+                Exhibit.VisExtension.datasets['entity_descriptions'] = json;
+
+                d3.selectAll('span.entity-list')
+                    .selectAll('span')
+                    .on('click', function(d) {
+                        var node = d3.select(this);
+                        var title = node.text();
+
+                        Exhibit.jQuery(node.node()).popover({
+                            'trigger': 'click',
+                            'placement': 'top',
+                            'content': json[title]
+                        });
+                    });
+            });
+        });
+    });
 });
