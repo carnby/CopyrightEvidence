@@ -47,19 +47,23 @@
     ];
 
     // Feature used in the visualization.
-    var currentFeature = kFeatures[0]['id'];
+    var currentFeatureIndex = 0;
 
     // Updates the countries with the map. Call this method whenever you want to update the map.
     var update_countries = function (countryGroup, legendGroup) {
+        var currentFeatureId = kFeatures[currentFeatureIndex]['id'];
+
         var countries = countryGroup.selectAll('.country');
 
-        var legend = d3.legendColor()
-          .shapeWidth(30)
-          .cells([kFeatures[currentFeature].min_label, kFeatures[currentFeature].max_label])
-          .orient('horizontal')
-          .scale(color[currentFeature]);
+        require(['d3', 'legend'], function (d3, legend) {
+            var legend = d3.legend.color()
+              .shapeWidth(30)
+              .cells(5)
+              .orient('horizontal')
+              .scale(color[currentFeatureId]);
 
-        legendGroup.call(legend);
+            legendGroup.call(legend);
+        });
 
         // Check if we need to load the countries.
         if (countries[0].length == 0) {
@@ -78,7 +82,7 @@
                         var link = jQuery('div.exhibit-facet-value[title="' + name + '"]').find('a');
                         link.trigger('click');
                     });
-                update_countries(g);
+                update_countries(countryGroup, legendGroup);
             });
             return;
         }
@@ -88,9 +92,9 @@
             .style('fill', function(d, i) {
                 var name = d['properties']['ADMIN'];
                 if (name in countryFeatures) {
-                    var value = countryFeatures[name][currentFeature];
+                    var value = countryFeatures[name][currentFeatureId];
                     if (value) {
-                        return color[currentFeature](value);
+                        return color[currentFeatureId](value);
                     }
                 }
                 return '#eee';
@@ -189,8 +193,8 @@
                         .attr('href', '#')
                         .text(function(d,i) { return d['label']; })
                         .on('click', function(d,i) {
-                            currentFeature = d['id'];
-                            update_countries(g);
+                            currentFeatureIndex = i;
+                            update_countries(countryGroup, legendGroup);
                         });
                 // The SVG group to which the countries are added as children.
                 var svg = d3.select(self._dom.plotContainer)
@@ -208,12 +212,13 @@
                 
                 svgEnter
                     .append('g')
-                    .classed('legend', 1);
+                    .classed('legend', 1)
+                    .attr('transform', 'translate(50, ' + (height - 70) + ')');
 
                 var countryGroup = svg.select('g.countries');
                 var legendGroup = svg.select('g.legend');
 
-                update_countries(g, legendDiv);
+                update_countries(countryGroup, legendGroup);
             });  // d3.json
         });
     };
