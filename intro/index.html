@@ -78,9 +78,9 @@
 			}
 			
 			// The camera starts with an offset from the first year.
-			var kIntroDurationSeconds = 12;
+			var kIntroDurationSeconds = 9;
 			// Time spent in each year.
-			var kYearDurationSeconds = 4;
+			var kYearDurationSeconds = 1.3;
 			
 			// Speed of the camera in meters per seconds.
 			var cameraSpeed = (kYearLength / kYearDurationSeconds);
@@ -97,7 +97,7 @@
 			camera.setAttributeNS(null, 'position', [0, 0, cameraStartPosition].join(' '));
 
 			// Start the animation and the sound.
-			window.addEventListener('load', function() {
+			$(document).ready(function() {
 				console.info('Machine... ACTION!');
 				var totalYearLength = kYearLength * wordcloud.length;
 				var totalDuration = (totalYearLength + cameraStartPosition) / cameraSpeed * 1000;
@@ -106,11 +106,14 @@
 				positionAnimationEl.setAttributeNS(null, 'from', [0, 0, cameraStartPosition].join(' '));
 				positionAnimationEl.setAttributeNS(null, 'to', [0, 0, -totalYearLength].join(' '));
 				positionAnimationEl.setAttributeNS(null, 'dur', totalDuration);
+				positionAnimationEl.setAttributeNS(null, 'repeat', 'indefinite');
 				positionAnimationEl.setAttributeNS(null, 'easing', 'linear');
 				camera.appendChild(positionAnimationEl);
 
 				var soundEl = document.createElement('a-sound');
 				soundEl.setAttributeNS(null, 'src', 'src: url(starwars.mp3)');
+				// Sound positioned at the same position as the camera creates a singularity.
+				soundEl.setAttributeNS(null, 'position', '0 0 -1');
 				soundEl.setAttributeNS(null, 'autoplay', 'true');
 				camera.appendChild(soundEl);
 			});
