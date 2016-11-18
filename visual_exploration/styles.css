@@ -90,6 +90,13 @@ div.exhibit-viewPanel.exhibit-ui-protection {
     margin-bottom: 1em;
 }
 
-div.popover {
-    max-width: 500px;
+div.tooltip {
+    text-transform: none;
+}
+
+div.tooltip-inner {
+    max-width: 650px;
+    /* If max-width does not work, try using width instead */
+    width: 650px;
+    font-size: 13px;
 }

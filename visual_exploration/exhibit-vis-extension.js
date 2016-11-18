@@ -226,12 +226,12 @@ Exhibit.onjQueryLoaded(function() {
 
                 d3.selectAll('span.entity-list')
                     .selectAll('span')
-                    .on('click', function(d) {
+                    .each(function(d) {
                         var node = d3.select(this);
                         var title = node.text();
+                        node.attr('title', json[title]);
 
-                        Exhibit.jQuery(node.node()).popover({
-                            'trigger': 'click',
+                        Exhibit.jQuery(node.node()).tooltip({
                             'placement': 'top',
                             'content': json[title]
                         });

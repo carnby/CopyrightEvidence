@@ -94,6 +94,17 @@
                 });
             });
 
+            d3.select(self._dom.plotContainer).selectAll('p.intro')
+                .data([1])
+                .enter()
+                .append('p')
+                .classed('intro', true)
+                .text('This is the list of most frequent terms and concepts (bi-grams) found in the abstracts ' +
+                    'of the articles selected through the filters on the left. ' +
+                    'In this wordcloud, font size and color is proportional to the frequency of the corresponding' +
+                    ' terms. ' +
+                    'If you click any word, the system will use your selection as a search query.')
+
             wordcounts = d3.entries(wordcounts);
 
             var container = d3.select(self._dom.plotContainer)

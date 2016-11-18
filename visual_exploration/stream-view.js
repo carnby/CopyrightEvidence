@@ -147,9 +147,35 @@
                 .y0(function (d) { return y(d.y0); })
                 .y1(function (d) { return y(d.y0 + d.y); });
 
+            d3.select(self._dom.plotContainer).selectAll('p.intro')
+                .data([1])
+                .enter()
+                .append('p')
+                .classed('intro', true)
+                .text('In this streamgraph view, you can observe the temporal patterns of the most frequent' +
+                    ' entities and concepts found in the selected articles. Each entity is represented as a ribbon,' +
+                    ' with a size that depends on the number of articles that contain that entity every year. ' +
+                    'The entities where obtained by performing Named Entity Resolution on the article abstracts, ' +
+                    'using the DBPedia Spotlight tool.'
+                    )
+
             var container = d3.select(self._dom.plotContainer)
                 .selectAll('svg.stream')
                 .data([1]);
+
+            /*
+            container.enter()
+                .append('p')
+                .html('In this map view, you can observe the spatial patterns in the number of articles' +
+                    'found in the Copyright Evidence Wiki, according to the selected filters. Additionally, ' +
+                    'you may want to understand how research about copyright is related to public opinion. ' +
+                    'To do so, we obtained a dataset of survey results from ' +
+                    ' MEP' +
+                    ' Julia Reda (A joint dataset for the' +
+                    ' EU copyright' +
+                    ' consultation responses). Select which questions you want to see on the map to find the ' +
+                    'perceptions and opinions about copyright through the European Union.')
+            */
 
             container.enter().append('svg')
                 .classed('stream', 1)

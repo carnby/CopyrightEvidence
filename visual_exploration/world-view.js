@@ -171,6 +171,20 @@
                         .range([d3.rgb('#fc8d59'), d3.rgb('#91cf60')]),
                 };
 
+                d3.select(self._dom.plotContainer).selectAll('p.intro')
+                .data([1])
+                .enter()
+                .append('p')
+                .classed('intro', true)
+                .text('In this map view, you can observe the spatial patterns behind the studies available at the ' +
+                    'Copyright Evidence Wiki. However, these studies represent the academic view of copyright, ' +
+                    'which may or may not be correlated with public opinion about copyright issues. ' +
+                    'To explore this relation, we summarized a joint dataset of survey responses for the EU copyright' +
+                    ' consultation, made available by MEP Julia Reda. In the buttons below you can select either the' +
+                    ' number of articles and its ' +
+                    'related countries, or the survey responses.'
+                    )
+
                 // Populate the buttons at the top of the page.
                 var headerDiv = d3.select(self._dom.plotContainer)
                     .selectAll('div.map-header')
